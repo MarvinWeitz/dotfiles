@@ -71,4 +71,21 @@ if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
     echo '  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k'
 fi
 
+# Check if fzf is installed
+if ! command -v fzf &> /dev/null; then
+    # Detect OS type
+    if [ "$(uname)" = "Darwin" ]; then
+        echo -e "${BLUE}Note: fzf (fuzzy finder) is not installed. Installing with Homebrew...${NC}"
+        brew install fzf
+    elif [ -f /etc/debian_version ]; then
+        echo -e "${BLUE}Note: fzf (fuzzy finder) is not installed. Installing with apt...${NC}"
+        sudo apt install fzf
+    elif [ -f /etc/fedora-release ]; then
+        echo -e "${BLUE}Note: fzf is not installed. Install it with:${NC}"
+        echo "  sudo dnf install fzf"
+    else
+        echo -e "${BLUE}Note: fzf is not installed. Please install it using your package manager.${NC}"
+    fi
+fi
+
 echo -e "${GREEN}To apply changes, restart your terminal or run: source ~/.zshrc${NC}"
