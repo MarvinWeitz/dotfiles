@@ -1,0 +1,23 @@
+[init]
+	defaultBranch = main
+[core]
+	editor = code --wait
+[pull]
+	rebase = true
+[alias]
+	publish = !git push --set-upstream origin $(git branch --show-current)
+	cleanup-branches = "!f() {\n  protected=$(git config --get cleanup.protectedBranches | tr \",\" \" \");\n  current_branch=$(git symbolic-ref --short HEAD);\n  deleted_any=false;\n\n  for branch in $(git branch --format=\"%(refname:short)\"); do\n    skip=false;\n    [ \"$branch\" = \"$current_branch\" ] && skip=true;\n    for p in $protected; do\n      [ \"$branch\" = \"$p\" ] && skip=true && break;\n    done;\n    if [ \"$skip\" = true ]; then\n      continue;\n    fi\n\n    upstream=$(git for-each-ref --format=\"%(upstream:short)\" refs/heads/\"$branch\")\n    if [ -z \"$upstream\" ]; then\n      echo \"  Skipping $branch - No upstream tracking branch\"\n      continue;\n    fi\n\n    if git branch -d \"$branch\" >/dev/null 2>&1; then\n      if [ \"$deleted_any\" = false ]; then\n        echo \"Deleting branches:\";\n        deleted_any=true;\n      fi\n      echo \"  $branch - Remote: $upstream\"\n    else\n      echo \"  Not deleting $branch - Remote: $upstream (not merged or has unpushed commits)\"\n    fi\n  done\n\n  if [ \"$deleted_any\" = false ]; then\n    echo \"No branches to delete.\"\n  fi\n}; f"
+	unadd = restore -S
+	close-ticket = !git push && git switch development && git pull && git cleanup-branches
+	open-ticket = "!f() { git switch development && git pull && git switch -c feature/$1; }; f"
+[cleanup]
+	protectedBranches = development,local
+[push]
+	default = upstream
+	autoSetupRemote = true
+[branch]
+	autoSetupMerge = simple
+[rerere]
+	enabled = true
+[credential]
+	useHttpPath = true
