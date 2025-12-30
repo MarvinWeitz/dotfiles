@@ -1,5 +1,6 @@
 #!/bin/bash
 # merge-gitconfig.sh - Merge host gitconfig with dotfiles gitconfig
+# This is needed for devcontainer scenarios where a host gitconfig should be copied into the container first
 set -e
 
 GREEN='\033[0;32m'
