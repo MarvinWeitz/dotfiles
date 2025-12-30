@@ -76,7 +76,7 @@ fi
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
 # Call merge script for gitconfig
-if [ -f "$HOME/dotfiles/merge-gitconfig.sh" ] && [ ! -f "$HOME/.gitconfig-merged" ]; then
+if [ -f "$HOME/dotfiles/merge-gitconfig.sh" ] && [ "$(git config --global --get custom.gitconfigmerged)" != "true" ]; then
     bash "$HOME/dotfiles/merge-gitconfig.sh"
-    touch "$HOME/.gitconfig-merged"  # Flag to run only once
+    git config --global custom.gitconfigmerged true
 fi
