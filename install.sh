@@ -48,7 +48,7 @@ link_dotfile() {
 # Link dotfiles
 link_dotfile "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 link_dotfile "$DOTFILES_DIR/.p10k.zsh" "$HOME/.p10k.zsh"
-link_dotfile "$DOTFILES_DIR/.gitignore" "$HOME/.gitconfig"
+link_dotfile "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 
 echo -e "${GREEN}Dotfiles installation complete!${NC}"
 
