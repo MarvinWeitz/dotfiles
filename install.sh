@@ -45,10 +45,28 @@ link_dotfile() {
     echo -e "${GREEN}✓ Linked $target -> $source${NC}"
 }
 
+# Capture git credentials BEFORE linking .gitconfig
+echo -e "${BLUE}Capturing git credentials from host...${NC}"
+GIT_USER_NAME=$(git config --global user.name 2>/dev/null || echo "")
+GIT_USER_EMAIL=$(git config --global user.email 2>/dev/null || echo "")
+
 # Link dotfiles
 link_dotfile "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 link_dotfile "$DOTFILES_DIR/.p10k.zsh" "$HOME/.p10k.zsh"
 link_dotfile "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
+
+# Re-apply git user credentials if they were captured
+if [ -n "$GIT_USER_NAME" ] && [ -n "$GIT_USER_EMAIL" ]; then
+    echo -e "${BLUE}Applying git user credentials...${NC}"
+    git config --global user.name "$GIT_USER_NAME"
+    git config --global user.email "$GIT_USER_EMAIL"
+    echo -e "${GREEN}✓ Git user configured: $GIT_USER_NAME <$GIT_USER_EMAIL>${NC}"
+else
+    echo -e "${RED}Warning: Could not capture git credentials from host${NC}"
+    echo -e "${BLUE}You may need to set them manually with:${NC}"
+    echo "  git config --global user.name \"Your Name\""
+    echo "  git config --global user.email \"your.email@example.com\""
+fi
 
 echo -e "${GREEN}Dotfiles installation complete!${NC}"
 
