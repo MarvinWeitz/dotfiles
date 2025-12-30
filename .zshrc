@@ -74,3 +74,9 @@ fi
 
 # Disable Powerlevel10k instant prompt if it was enabled at the top of this file
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+
+# Call merge script for gitconfig
+if [ -f "$HOME/dotfiles/merge-gitconfig.sh" ] && [ ! -f "$HOME/.gitconfig-merged" ]; then
+    bash "$HOME/dotfiles/merge-gitconfig.sh"
+    touch "$HOME/.gitconfig-merged"  # Flag to run only once
+fi
