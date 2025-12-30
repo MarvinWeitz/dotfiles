@@ -1,9 +1,3 @@
-# Call merge script for gitconfig
-if [ -f "$HOME/dotfiles/merge-gitconfig.sh" ] && [ "$(git config --global --get custom.gitconfigmerged)" != "true" ]; then
-    bash "$HOME/dotfiles/merge-gitconfig.sh"
-    git config --global custom.gitconfigmerged true
-fi
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -80,3 +74,9 @@ fi
 
 # Disable Powerlevel10k instant prompt if it was enabled at the top of this file
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+
+# Call merge script for gitconfig
+if [ -f "$HOME/dotfiles/merge-gitconfig.sh" ] && [ "$(git config --global --get custom.gitconfigmerged)" != "true" ]; then
+    bash "$HOME/dotfiles/merge-gitconfig.sh"
+    git config --global custom.gitconfigmerged true
+fi
