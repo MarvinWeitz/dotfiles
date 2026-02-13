@@ -34,11 +34,3 @@
 	enabled = true
 [credential]
 	useHttpPath = true
-	helper = "!f() { /home/vscode/.vscode-server/bin/591199df409fbf59b4b52d5ad4ee0470152a9b31/node /tmp/vscode-remote-containers-e14df0c1-2d9d-4990-9bf1-790e8b32326e.js git-credential-helper $*; }; f"
-[user]
-	name = Marvin Weitz
-	email = marvin.weitz@cbs-consulting.de
-[safe]
-	directory = C:/Users/marvin.weitz/Dev/projects/dockerfiles
-[custom]
-	gitconfigmerged = true
